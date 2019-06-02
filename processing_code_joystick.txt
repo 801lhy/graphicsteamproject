@@ -1,0 +1,35 @@
+import processing.serial.*;
+Serial p;
+String position;
+String xPos;
+String yPos;
+String value;
+
+void setup() {
+  size(1200, 1200);
+  p = new Serial(this, "COM9", 9600);
+}
+void draw() {
+  background(0);
+  if (p.available()>0)
+  {
+    
+    position = p.readString();
+    position = position.replaceAll(" ","");
+    position = trim(position);
+    
+    if (position.charAt(0) == '*' && position.charAt(position.length()-1) == '#')
+    {
+      value = position.substring(1, position.length()-1);
+      println(position + " // "+value);
+    }
+    delay(100);
+    
+  }
+  
+  //if (position != null)
+  //{
+  //  x = float(position);
+  //  ellipse(x, 700, 50, 50);
+  //}
+}

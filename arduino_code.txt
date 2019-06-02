@@ -1,0 +1,16 @@
+void setup() {
+Serial.begin(9600);
+pinMode(3, INPUT_PULLUP);
+}
+
+void loop() {
+int push = digitalRead(3);
+int posX = analogRead(A0);
+int posY = analogRead(A1);
+
+
+Serial.print('*');
+Serial.print(posX);
+Serial.println('#');
+delay(100);
+}
