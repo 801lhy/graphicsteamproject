@@ -1,0 +1,66 @@
+int numBullets = 30;                                  //Number of Bullets
+
+PImage photo;                                         //To Be Background Image
+PImage photo2;                                        //To Be User Character
+User[] Player = new User[1];                          //User
+Stopwatch Time;                                       //Stopwatch
+Bullets[] Bullet = new Bullets[numBullets];           //Bullets
+
+void setup() {
+  size(500, 600);                                     //Size of Artwork
+  photo = loadImage("Background_Sky.jpg");            //Background Image
+  photo2 = loadImage("Player.png");                   //User Character Image
+  textAlign(CENTER, CENTER);
+  for (int j = 0; j < Player.length; j++) {
+    Player[j] = new User();
+  }
+  //Time = new Stopwatch();
+  for (int i = 0; i < numBullets; i++) {
+    Bullet[i] = new Bullets();
+  }
+}
+
+void draw() {
+  imageMode(CORNER);                                  //Origin of Background Image
+  image(photo, 0, 0);                                 //Background Image
+  imageMode(CENTER);                                  //Origin of User Character & Everything Else
+  for (int j = 0; j < Player.length; j++) {
+    Player[j].display();
+    Player[j].move();
+  }
+  //Time.display();
+  for (int i = 0; i < numBullets; i++) {
+    Bullet[i].display();
+    //Bullet[i].shadow();
+    Bullet[i].move();                                 
+    Bullet[i].bounce();                              //장애물 바운스(좌우로 흔들림)
+    for (int j = 0; j < Player.length; j++) {         //장애물에 닿으면 GameOver
+      if (Bullet[i].hit(Player[j])) {
+        Bullet[i].GameOver();                         //Draw Gamer Over Screen
+        noLoop();                                     //Stop all Draw
+      }
+    }
+  }
+}
+
+void keyPressed() {
+  for (int j = 0; j < Player.length; j++) {
+    if (keyCode == RIGHT) {
+      Player[j].setDirX(1);
+    } else if (keyCode == LEFT) {                     //LEFT
+      Player[j].setDirX(-1);
+    }
+    if (keyCode == UP) {                              //UP
+      Player[j].setDirY(-1);
+    } else if (keyCode == DOWN) {                     //DOWN
+      Player[j].setDirY(1);
+    }
+  }
+}
+
+void keyReleased() {
+  for (int j = 0; j < Player.length; j++) {
+      Player[j].setDirX(0);
+      Player[j].setDirY(0);
+  }
+}
