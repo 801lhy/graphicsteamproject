@@ -1,0 +1,25 @@
+const int XPosition = A0; //X위치
+const int YPosition = A1; //Y위치
+const int SW_P = 3;       //조이스틱 핀번호
+ 
+void setup() {
+  Serial.begin(9600);
+  pinMode(SW_P,INPUT_PULLUP);
+}
+ void loop() {
+  //X축 방향값
+  if(analogRead(XPosition)<=300){
+    Serial.println('a');
+  }
+  else if(analogRead(XPosition)>=700){
+    Serial.println('d');   
+  }
+  //Y축 방향값
+  if(analogRead(YPosition)<=300){
+    Serial.println('w');      
+  }
+  else if(analogRead(YPosition)>=700){
+    Serial.println('s');
+  }
+  delay(10);
+}
